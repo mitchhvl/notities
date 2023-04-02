@@ -1,0 +1,30 @@
+Feedback op mijn eerste poging:
+
+Wijkt uit naar interviews maar pakt niet door. 
+De gebruikte tools geeft hij niet goed aan wat er is gevonden en wat de impact is. 
+Te weinig voorgestelde issues gevonden. Advies gaat de verkeerde kant op, heeft de opdracht (scannen) niet goed begrepen.
+
+
+gebruiken tools van sysinternals
+mbsa
+standaard dingen checken systemen security
+rechten active directory (shares)
+rus binnen netwerk in logbestand
+log bestand
+poorten poort 53 DNS poort, een medewerker merkt dat zn pc wordt overgenomen en wordt ge redirect
++ sjabloon volledig invullen
+
+datsalek persoonsgegevens gelekt apotheek bijvoorbeeld chantage is mogelijk
+standaard login was root, root van de sql server. is dat wel goed voor de security.
+
+
+inloggen op de sql server is niet noodzakelijk als het niet lukt want logbestand is al gegeven 
+waar al duidelijk verdachte dingen in staan zoals de dns poort die open staat (53) doorverwijzing naar persoon 
+die ge redirect wordt naar andere wenbsites . een rus in het logebstand doorverwijst naar de 
+peroos waarvan zn pc werd overgenomen. etc.
+
+email naar opdrachtgever algemeen houden nergens te diep op in gaan.
+
+1,5 uur incident + dreigingen zoeken, 
+daarna krijg je op een blaadje met alle zwakheden. 
+documenteren, daarna incidenten en zwakheden oplossen 1,5u
