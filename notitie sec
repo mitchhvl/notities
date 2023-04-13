@@ -1,0 +1,69 @@
+ 
+
+auditrapport
+
+Datum 5 april 2023
+Auteur Mitch Heuvel
+
+Opdrachtgever
+Security-officer 
+
+Managementsamenvatting
+Met ons is contact opgenomen met de vraag of wij de security problematiek bij het bedrijf Amerijck wilden gaan identificeren en aanpakken. Voor mij is al duidelijk dat er met de server iets aan de hand is in de volgende alinea’s ga ik daar verder op in.
+Als ik de server opstart staat er midden in het scherm dat de server is gehackt. Dat is voor mij al een voor de hand liggende indicatie dat ik spoedig actie moeten ondernemen. Ik heb gezocht naar de oorzaak van dit probleem en verder heb uiteraard nog gekeken naar andere problemen die mogelijk op de server aanwezig zijn. 
+Op de server manager van de server is al duidelijk dat bepaalde zaken niet goed geconfigureerd zijn. Onder “Last installed updates” staat er never. Dat maakt al duidelijk dat de server niet up to date is. Daaronder staat dat de Windows updates alleen worden gedownload en niet worden geïnstalleerd. Voor een server is dat natuurlijk gebruikelijk dus kan dat niet veel kwaad aangezien een server altijd moet draaien. Verder staat de realtime protection (anti virus software van Windows) IE Enchanced security confiuration staat op uit dat is ook een duidelijke indicatie dat er weinig/niet aan security is gedacht. Tot slot wat te zien is in dit tabblad is dat Windows niet is geactiveerd wat natuurlijk niet de bedoeling is in professionele bedrijfsomgevingen. 
+Bovenstaand zijn mijn bevindingen zonder enige technische handelingen toe doen. Op de volgende pagina bij “Overzicht onderzoek” ga ik er verder op in hoe ik de server beter ga controleren en beveiligen behulp van tools.
+ 
+Overzicht onderzoek
+In dit hoofdstuk beschrijf overzichtelijk wat ik ga doen om dit project op te pakken. Het is al duidelijk dat er iets aan de hand is dus, is het voor mij belangrijk om een vaste werkwijze aan te houden voor het identificeren van specifieke problemen op de server. 
+Onderbouwing keuze onderzoekshulpmiddelen
+Process Explorer: Een geavanceerde taakbeheerder die gedetailleerde informatie biedt over alle lopende processen op een systeem, inclusief de bijbehorende bestanden, registersleutels en netwerkverbindingen. Het kan helpen bij het identificeren van verdachte processen die mogelijk malware of andere schadelijke activiteiten vertegenwoordigen.
+Autoruns: Een hulpprogramma voor het beheren van opstartprogramma's en services op een Windows-systeem. Het kan helpen bij het identificeren van verdachte opstartitems die mogelijk ongeautoriseerde toegang of uitvoering van kwaadaardige code mogelijk maken.
+TCPView: Een tool voor het weergeven van de actieve netwerkverbindingen op een Windows-systeem. Het kan helpen bij het identificeren van verdachte netwerkverbindingen of ongebruikelijke netwerkactiviteit die kan wijzen op kwaadaardige activiteiten.
+Zenmap: Zenmap is een tool voor netwerkverkenning en beveiligingsscanning. Het is gebaseerd op Nmap, een krachtige en flexibele netwerkscanning-tool. Zenmap heeft een GUI waarmee ik eenvoudig netwerkscans kan configureren en uitvoeren om informatie te verzamelen over de beveiligingsstatus van netwerkapparaten, zoals servers, routers en switches.
+Host file: De host file is niet echt een tool maar eerder een bestand. Dit bestandje kan je gebruiken om bepaalde websites en ip addressen in te zetten als je wilt worden geredirect. Het is heel handig maar kan ook worden mibruikt.
+ 
+Gedetailleerde resultaten
+Ik heb in de verkenner rondgestruind opzoek naar verdachte zaken. Al gouw viel me op dat er een software is geïnstalleerd op de server wat er niet hoort. Op de C schijf van de server zag ik een zip folder staan met de naam: darknet cain and abel. Ik heb gegoogled naar de software en ik zag dat het onder andere password recovery kan doen. Het lijkt mij dat dit niet iets is wat een beheerde zou installeren op de server.
+Ik keek verder naar geinstalleerde software via control panel. Daar zag ik staan: dwAgent en dat is een RAT software wat er niet hoort.
+Gebruikers en rechten
+In de active directory van de server onder users zag ik een test gebruiker staan. Als een beheerder een test gebruiker maakt, is het belangrijk dat diegene na het testen de gebruiker verwijderd ivm. Security.
+Ik heb gebruik gemaakt van een tool genaamd MBSA (Microsoft baseline security analyzer). Met deze tool check ik hoe de gebruikers, algemene instellingen en de rechten staan ingesteld op de server.
+Uitkomsten MBSA
+Er zijn 4 admin accounts gevonden op de server. Dat is erg veel en dit kan efficienter en veiliger worden ingericht.
+De test, Piet, Erik, Guest en Administrator accounts staan ingesteld op: “Password never expires”. Dat betekent dat deze accounts gevoelig zijn voor een bruteforce attack.
+Uit de scan is gebleken nogmaals dat de firewall niet aan staat.
+
+Logboek gecontroleerd
+Ik heb gekeken in het opgestuurde logboek bestand en daaruit kwam dat poort 53 open stond. Poort 53 wordt normaal gesproken gebruikt voor het DNS. Een openstaande poort 53 kan duiden op een potentiële beveiligingskwetsbaarheid, aangezien het kan worden misbruikt door kwaadwillende actoren voor DNS-aanvallen, zoals DNS-spoofing, DNS-amplificatie, of DNS-denial-of-service (DoS) aanvallen.
+Daarnaast is geconstateerd dat er een Rus aanwezig is in het logboek, wat kan duiden op een verdachte of ongeautoriseerde activiteit op het netwerk. Het is belangrijk om de herkomst en bedoelingen van deze Rus nader te onderzoeken, aangezien ongeautoriseerde toegang tot het netwerk of onbevoegde activiteiten van externe actoren ernstige beveiligingsrisico's kunnen vormen.
+Het is aan te bevelen om direct actie te ondernemen om de openstaande poort 53 te onderzoeken en te beveiligen, bijvoorbeeld door de toegang tot de poort te beperken tot alleen de geautoriseerde DNS-servers en/of door het implementeren van DNS-beveiligingsmaatregelen, zoals DNSSEC (Domain Name System Security Extensions) om de integriteit en authenticiteit van DNS-gegevens te waarborgen. Daarnaast dient de aanwezigheid van de "Rus" in het logboek verder te worden onderzocht om vast te stellen of er sprake is van ongeautoriseerde toegang of verdachte activiteit, en om passende maatregelen te nemen om de beveiliging van het netwerk te versterken en eventuele schadelijke activiteiten te stoppen.
+Conclusies
+Op basis van deze resultaten zijn er meerdere conclusies te trekken. Allereerst zijn er verschillende verdachte zaken gevonden op de server, zoals ongeautoriseerde software zoals "darknet cain and abel" en "dwAgent", en een testgebruiker in de Active Directory. Dit zorgt voor potentiële beveiligingsrisico's die moeten worden aangepakt.
+Een medewerker merkt dat zijn pc wordt overgenomen dit heeft hoogstwaarschijnlijk te maken met de Rus in het logbestand en de software darknet cain en abel.
+Een andere medewerker merkt dat hij wordt ge redirect naar andere websites. Het is overduidelijk dat dit heeft te maken met de DNS poort “53” in het logbestand.
+De wachtwoord policies voor bepaalde accounts waren onveilig ingericht. De accounts van de testgebruiker, Piet, Erik, Guest en Administrator zijn ingesteld op "Password never expires", wat een verhoogd risico op brute force-attacks met zich meebrengt. Dit vereist directe actie om de wachtwoordinstellingen te verbeteren en de accounts beter te beveiligen.
+Ook is gebleken dat er meerdere admin accounts aanwezig zijn op de server, wat inefficiënt en onveilig is. Een betere beheerstructuur met beperkte rechten zou de beveiliging van de server kunnen versterken.
+Deze beschrijvingen maken duidelijk dat de kans op een lek van persoonsgegevens groot is. Het is natuurlijk niet de bedoeling dat de persoonsgegevens van iedere medewerker van bedrijf Amerijck op straat komt te liggen.
+ 
+Advies
+Ik ben tot conclusie gekomen dat het beste advies is om alles opnieuw te installeren om een betere balans te bereiken tussen beveiliging en efficiëntie voor de organisatie. Dit kan de volgende voordelen opleveren.
+Het opnieuw installeren van het systeem zorgt voor een schone lei, waarbij alle ongeautoriseerde software, gebruikersaccounts en mogelijke kwetsbaarheden worden verwijderd. Dit helpt om te zorgen voor een goede basis voor beveiliging en minimaliseert het risico van achtergebleven kwetsbaarheden of backdoors.
+Bij een nieuwe installatie kunnen beveiligingsconfiguraties op een betere en optimalere manier worden ingesteld. Dit omvat het inschakelen van de firewall, het configureren van wachtwoordbeleid, het minimaliseren van admin-accounts en het toepassen van de nieuwste patches en updates. Dit helpt om te zorgen voor een sterke beveiliging vanaf het begin.
+Een schone installatie biedt de mogelijkheid om gebruikersaccounts en rechten opnieuw in te stellen. Dit maakt het beheren veel makkelijker.
+Een volledige herinstallatie kan zorgen voor een hoger niveau van vertrouwen in de beveiliging van het systeem, zowel intern als extern. 
+Het is belangrijk om voorafgaand aan een herinstallatie een goede planning te maken, inclusief het opstellen van een back-up- en herstelstrategie, zodat er geen gegevensverlies of verstoring van bedrijfsprocessen optreedt. 
+ 
+E-mail naar opdrachtgever
+Beste opdrachtgever,
+
+Ik wil je graag informeren over een recente ontwikkeling bij jullie bedrijf met betrekking tot de security van het apparatuur. Onlangs werd contact met ons opgenomen met de vraag of wij de security problematiek wilden identificeren en aanpakken, en ik wil je graag op de hoogte stellen van de bevindingen tot nu toe.
+Uit mijn onderzoek is gebleken dat er inderdaad een security issues zijn. Bij het opstarten van de server werd er een melding weergegeven dat de server gehackt is, wat een duidelijke indicatie is dat er snel actie moet worden ondernomen. Verder heb ik gekeken naar andere problemen op de server en heb ik geconstateerd dat bepaalde zaken niet goed geconfigureerd zijn. Zo zijn de Windows updates niet geïnstalleerd en staat de realtime bescherming (anti-virus software) uit. Bovendien is Windows niet geactiveerd, wat niet overeenkomt met professionele bedrijfsstandaarden.
+Om het probleem verder te identificeren en aan te pakken, heb ik gebruik gemaakt van verschillende onderzoekshulpmiddelen, waaronder Process Explorer, Autoruns, TCPView, Zenmap en heb ik de geïnstalleerde software en gebruikersrechten grondig onderzocht. Hierbij heb ik verdachte software, zoals "darknet cain and abel" en "dwAgent", aangetroffen, die niet thuishoren op onze server. Daarnaast heb ik een testgebruiker gevonden in de active directory van de server, wat ook een potentieel beveiligingsrisico kan vormen.
+Om de security van onze server te verbeteren, zal ik verdere maatregelen nemen op basis van mijn bevindingen. Ik zal ervoor zorgen dat de server up-to-date is met de laatste Windows updates, de realtime bescherming wordt ingeschakeld, en dat er geen verdachte software of gebruikers aanwezig zijn op de server. Daarnaast zal ik de beveiliging van de server blijven monitoren en indien nodig aanvullende maatregelen nemen om de security te waarborgen.
+Mijn advies is het opnieuw installeren van de hele infrastructuur om zo er zeker van te zijn dat alle risico’s zijn verwijderd. Ik heb alle details in een document opgesteld en dit heb ik met de security officer gedeeld. Ik constateer dat de server zo danig is aangetast dat het misschien beter is om dus met een schone lei te beginnen. Het zal alleen wel een heel project worden om alle belangrijke data over te zetten dus laat ik het aan jullie over om hierover te beslissen.
+Ik wil benadrukken dat de security van onze server een hoge prioriteit heeft en dat we er alles aan doen om de situatie zo snel mogelijk te verbeteren. Mocht je vragen hebben of meer informatie willen, dan ben ik bereikbaar om je hierover verder te informeren.
+
+Met vriendelijke groet,
+
+Mitch Heuvel
