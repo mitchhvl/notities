@@ -10,3 +10,6 @@ NOTITESSSS
 na de % komt de andere tekst. Dus kan ook als:
 
 WHERE procesnaam LIKE '%.exe';
+
+gemmidelde_cpu_usage is een alias.
+nodig voor de functie: order by.
