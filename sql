@@ -15,3 +15,6 @@ gemmidelde_cpu_usage is een alias.
 nodig voor de functie: order by.
 
 https://www.w3schools.com/mysql/mysql_count_avg_sum.asp
+sql query 
+
+waarbij gemiddelde cpu hoger is dan berekende gemiddelde
