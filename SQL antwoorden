@@ -1,0 +1,25 @@
+SQL antwoorden.
+
+Vraag 1
+SELECT * FROM Processen;
+
+Vraag 2
+SELECT Name, CPU FROM Processen;
+
+Vraag 3
+SELECT Name, CPU FROM Processen
+WHERE CPU > 100;
+
+Vraag 4
+INSERT INTO Whitelist
+VALUES("Goodprocess");
+
+Vraag 5
+SELECT Name
+FROM Processen
+WHERE Name NOT IN (SELECT Name FROM Whitelist);
+
+Vraag 6
+SELECT Name, CPU
+FROM Processen
+WHERE CPU > (SELECT AVG(CPU) FROM Processen);
